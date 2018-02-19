@@ -40,8 +40,8 @@
 </div>
 </template>
 <script>
-const Builder = {
-  name: 'Builder',
+const DefaultBuilder = {
+  name: 'DefaultBuilder',
   props: ['filter', 'fields'],
   inject: [
     'addRule',
@@ -52,6 +52,9 @@ const Builder = {
     'setValue',
     'componentMap'
   ],
+  created () {
+    this.$options.components.Builder = require('./Builder').default;
+  },
   methods: {
     value (e) {
       return e.target.value;
@@ -71,6 +74,5 @@ const Builder = {
   }
 };
 
-export default Builder;
-
+export default DefaultBuilder;
 </script>

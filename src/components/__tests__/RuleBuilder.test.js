@@ -205,10 +205,9 @@ describe("RuleBuilder.vue", () => {
 
     const select = wrapper.find('[data-test="fieldSelector"]');
 
-    select
-      .findAll("option")
-      .at(1)
-      .trigger("change");
+    select.element.value = "ID";
+
+    select.trigger("change");
 
     const { field, operation, value } = spy.mock.calls[0][0].rules[0];
 

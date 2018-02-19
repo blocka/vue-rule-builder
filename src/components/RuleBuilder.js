@@ -1,5 +1,4 @@
 import uuid from "uuid";
-
 import Builder from "./Builder";
 
 function normalize(filter, rules) {
@@ -67,6 +66,9 @@ function denormalize(rule, _rules) {
   return clonedRule;
 }
 
+export const NestedBuilder = {
+  props: ["filter", "fields", "slot"]
+};
 export default {
   props: ["filter", "fields", "componentMap"],
   name: "RuleBuilder",
@@ -170,7 +172,9 @@ export default {
         filter: this.denormalizedFilter,
         fields: this.fields
       },
-      scopedSlots: this.$scopedSlots
+      scopedSlots: {
+        default: this.$scopedSlots.default
+      }
     });
   }
 };
