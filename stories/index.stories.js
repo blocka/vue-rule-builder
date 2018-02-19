@@ -81,6 +81,71 @@ storiesOf("Rule Builder", module)
   </rule-builder>
   `
   }))
+  .add("one filter", () => ({
+    data() {
+      return {
+        filter: {
+          all: true,
+          rules: [
+            {
+              field: null
+            }
+          ]
+        },
+        fields
+      };
+    },
+    template: `
+  <rule-builder :filter.sync="filter" :fields="fields">
+  </rule-builder>
+  `
+  }))
+  .add("two filters", () => ({
+    data() {
+      return {
+        filter: {
+          all: true,
+          rules: [
+            {
+              field: null
+            },
+            {
+              field: null
+            }
+          ]
+        },
+        fields
+      };
+    },
+    template: `
+  <rule-builder :filter.sync="filter" :fields="fields">
+  </rule-builder>
+  `
+  }))
+  .add("group", () => ({
+    data() {
+      return {
+        filter: {
+          all: true,
+          rules: [
+            {
+              all: true,
+              rules: [
+                {
+                  field: null
+                }
+              ]
+            }
+          ]
+        },
+        fields
+      };
+    },
+    template: `
+  <rule-builder :filter.sync="filter" :fields="fields">
+  </rule-builder>
+  `
+  }))
   .add("lots of filters", () => ({
     data() {
       return {

@@ -1,5 +1,6 @@
 import uuid from "uuid";
 import Builder from "./Builder";
+import Vue from "vue";
 
 function normalize(filter, rules) {
   const _rules = rules || {};
@@ -77,7 +78,8 @@ export default {
       setField: this.setField,
       setOperation: this.setOperation,
       setValue: this.setValue,
-      componentMap: this.componentMap || {}
+      componentMap: this.componentMap || {},
+      removeRule: this.removeRule
     };
   },
   data() {
@@ -96,6 +98,31 @@ export default {
     }
   },
   methods: {
+    removeRule(ruleID) {
+      Vue.delete(this.normalizedFilter, ruleID);
+
+      for (const rule of Object.values(this.normalizedFilter)) {
+        if (typeof rule.all !== "undefined") {
+          const index = rule.rules.findIndex(x => x === ruleID);
+
+          if (index > -1) {
+            rule.rules.splice(index, 1);
+          }
+        }
+
+        if (rule.filter) {
+          const filterRule = this.normalizedFilter[rule.filter];
+
+          const index = filterRule.rules.findIndex(x => x === ruleID);
+
+          if (index > -1) {
+            filterRule.rules.splice(index, 1);
+          }
+        }
+      }
+
+      this.$emit("update:filter", this.denormalizedFilter);
+    },
     addRule(parent) {
       const rule = {
         id: uuid.v4(),

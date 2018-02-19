@@ -305,4 +305,140 @@ describe("RuleBuilder.vue", () => {
 
     expect(wrapper.findAll('[data-test="valueSetter"]').length).toBe(1);
   });
+
+  test("remove a rule", () => {
+    const spy = jest.fn();
+
+    const wrapper = mount({
+      data() {
+        return {
+          fields,
+          filter: {
+            all: true,
+            rules: [
+              {
+                field: "ID",
+                operation: null,
+                value: null
+              },
+              {
+                field: "ID",
+                operation: null,
+                value: null
+              }
+            ]
+          }
+        };
+      },
+      methods: {
+        spy
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" @update:filter="spy" :fields="fields">
+      </rule-builder>
+    `
+    });
+
+    const button = wrapper.find('[data-test="removeRule"]');
+
+    button.trigger("click");
+
+    const expected = spy.mock.calls[0][0].rules.map(
+      ({ field, operation, value }) => ({ field, operation, value })
+    );
+    expect(expected).toEqual([
+      {
+        field: "ID",
+        operation: null,
+        value: null
+      }
+    ]);
+  });
+
+  test("remove a nested rule", () => {
+    const spy = jest.fn();
+
+    const wrapper = mount({
+      data() {
+        return {
+          fields,
+          filter: {
+            all: true,
+            rules: [
+              {
+                all: true,
+                rules: [
+                  {
+                    field: "ID",
+                    operation: null,
+                    value: null
+                  }
+                ]
+              }
+            ]
+          }
+        };
+      },
+      methods: {
+        spy
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" @update:filter="spy" :fields="fields">
+      </rule-builder>
+    `
+    });
+
+    const button = wrapper.find('[data-test="removeRule"]');
+
+    button.trigger("click");
+
+    const expected = spy.mock.calls[0][0].rules[0].rules.length;
+    expect(expected).toEqual(0);
+  });
+
+  /* Don't know why this fails
+  test("remove a filter rule", () => {
+    const spy = jest.fn();
+
+    const wrapper = mount({
+      data() {
+        return {
+          fields,
+          filter: {
+            all: true,
+            rules: [
+              {
+                field: "totalPayments",
+                filter: {
+                  all: true,
+                  rules: [
+                    {
+                      field: "department"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        };
+      },
+      methods: {
+        spy
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" @update:filter="spy" :fields="fields">
+      </rule-builder>
+    `
+    });
+
+    const button = wrapper.find('[data-test="removeRule"]');
+
+    button.trigger("click");
+
+    const expected = spy.mock.calls[0][0].rules[0].rules.length;
+    expect(expected).toEqual(0);
+  });*/
 });

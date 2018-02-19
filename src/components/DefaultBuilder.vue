@@ -8,12 +8,13 @@
   </div>
   <div v-for="(rule, i) of filter.rules" :key="i">
     <Builder
-      v-if="false || typeof rule.all !== 'undefined'"
+      v-if="typeof rule.all !== 'undefined'"
       :fields="fields"
       :filter="rule"
       class="nested"
     />
     <div v-else>
+      <button v-if="filter.rules.length > 1 || filter.id !== 'root'" data-test="removeRule" @click="removeRule(rule.id)">Remove</button>
       <select :value="rule.field" @change="setField(rule.id, getField(value($event)))" data-test="fieldSelector">
         <option :value="null">Field</option>
         <option v-for="(field, j) of fields" :key="j" :value="field.name">
@@ -45,6 +46,7 @@ const DefaultBuilder = {
   props: ['filter', 'fields'],
   inject: [
     'addRule',
+    'removeRule',
     'addGroup',
     'changeGroupType',
     'setField',
