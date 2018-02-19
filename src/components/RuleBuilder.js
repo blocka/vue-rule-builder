@@ -66,9 +66,6 @@ function denormalize(rule, _rules) {
   return clonedRule;
 }
 
-export const NestedBuilder = {
-  props: ["filter", "fields", "slot"]
-};
 export default {
   props: ["filter", "fields", "componentMap"],
   name: "RuleBuilder",
