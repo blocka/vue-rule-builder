@@ -1,6 +1,8 @@
 import { storiesOf } from "@storybook/vue";
 import Builder from "../src/components/Builder";
 
+require("./storybook.css");
+
 const fields = [
   {
     name: "ID",
@@ -211,13 +213,13 @@ storiesOf("Rule Builder", module)
                 + Filter Further
               </span>
               {{getField(rule.field).fields}}
-              <Builder class="nested" v-else :fields="getField(rule.field).fields" :filter="rule.filter" /> 
+              <Builder class="nested" v-else :fields="getField(rule.field).fields" :filter="rule.filter" />
             </div>
           </div>
         </div>
         <button data-test="addRule" @click="addRule(filter.id)">Add Rule</button>
         <button data-test="addGroup" @click="addGroup(filter.id)">Add Group</button>
       </div>
-    </rule-builder>    
+    </rule-builder>
     `
   }));

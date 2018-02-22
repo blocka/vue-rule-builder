@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #424242;
+}
+.vrb-container {
+  margin-left: 20px;
+}
+div {
+  position: relative;
+}
+input {
+  height: 25px;
+  padding: 5px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 5px 5px;
+}
+select {
+  height: 25px;
+  margin: 5px 5px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+button {
+  padding: 5px;
+  height:25px;
+  margin: 5px 5px;
+  border-radius: 4px;
+  background: none;
+  background: #3b5998;
+  border: 1px solid #2a406f;
+  color: white;
+}
+
+button:hover {
+  background: #2a406f;
+  cursor: pointer;
+}
+
+.vrb-nested {
+  margin: 15px 0 15px 25px;
+  padding-left: 10px;
+  position: relative;
+}
+.vrb-nested:before {
+  content: "";
+  width: 15px;
+  border-top: 1px solid #ccc;
+  position: absolute;
+  bottom: 8px;
+  left: -10px;
+}
+.vrb-nested:after {
+  content: "";
+  height: 100%;
+  border-left: 1px solid #ccc;
+  position: absolute;
+  top: -9px;
+  left: -10px;
+}
+.vrb-filter-further {
+    display: inline-block;
+    color: #3b5998;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.vrb-remove {
+    background: none;
+    border: none;
+    color: #ec5353;
+    position: absolute;
+    left: -20px;
+    top: -1px;
+}
+.vrb-remove:hover {
+  background: none;
+}
+.vrb-remove-group {
+  background: none;
+  color: #222;
+  border-color: #222;
+}
+.vrb-remove-group:hover {
+  color: white;
+  background: #222;
+  border-color: #222;
+}

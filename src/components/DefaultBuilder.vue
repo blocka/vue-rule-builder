@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="vrb-container">
   <div>
   <select :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
     <option :value="true">All of these rules are true</option>
@@ -11,10 +11,10 @@
       v-if="typeof rule.all !== 'undefined'"
       :fields="fields"
       :filter="rule"
-      class="nested"
+      class="vrb-nested"
     />
     <div v-else>
-      <button v-if="filter.rules.length > 1 || filter.id !== 'root'" data-test="removeRule" @click="removeRule(rule.id)">Remove</button>
+      <button class="vrb-remove" v-if="filter.rules.length > 1 || filter.id !== 'root'" data-test="removeRule" @click="removeRule(rule.id)">x</button>
       <select :value="rule.field" @change="setField(rule.id, getField(value($event)))" data-test="fieldSelector">
         <option :value="null">Field</option>
         <option v-for="(field, j) of fields" :key="j" :value="field.name">
@@ -29,49 +29,50 @@
       </select>
       <component data-test="valueSetter" v-if="rule.operation" :is="getComponentForRule(rule)" :value="rule.value" :rule="rule" @change="setValue(rule, $event)"></component>
       <div v-if="rule.field && isFilterable(rule.field)" data-test="fieldFilter">
-        <span v-if="rule.filter.rules.length === 0" @click="addRule(rule.filter.id)">
+        <span v-if="rule.filter.rules.length === 0" @click="addRule(rule.filter.id)" class="vrb-filter-further">
           + Filter Further
         </span>
-        <Builder class="nested" v-else :fields="getField(rule.field).fields" :filter="rule.filter" /> 
+        <Builder class="vrb-nested" v-else :fields="getField(rule.field).fields" :filter="rule.filter" />
       </div>
     </div>
   </div>
   <button data-test="addRule" @click="addRule(filter.id)">Add Rule</button>
   <button data-test="addGroup" @click="addGroup(filter.id)">Add Group</button>
+  <button class="vrb-remove-group">Remove Group</button>
 </div>
 </template>
 <script>
 const DefaultBuilder = {
-  name: 'DefaultBuilder',
-  props: ['filter', 'fields'],
+  name: "DefaultBuilder",
+  props: ["filter", "fields"],
   inject: [
-    'addRule',
-    'removeRule',
-    'addGroup',
-    'changeGroupType',
-    'setField',
-    'setOperation',
-    'setValue',
-    'componentMap'
+    "addRule",
+    "removeRule",
+    "addGroup",
+    "changeGroupType",
+    "setField",
+    "setOperation",
+    "setValue",
+    "componentMap"
   ],
-  created () {
-    this.$options.components.Builder = require('./Builder').default;
+  created() {
+    this.$options.components.Builder = require("./Builder").default;
   },
   methods: {
-    value (e) {
+    value(e) {
       return e.target.value;
     },
-    operationsForField (field) {
-      return this.getField(field).operations; 
+    operationsForField(field) {
+      return this.getField(field).operations;
     },
-    getField (field) {
+    getField(field) {
       return this.fields.find(x => x.name === field);
     },
-    isFilterable (field) {
+    isFilterable(field) {
       return this.getField(field).filterable;
     },
-    getComponentForRule (rule) {
-      return this.componentMap[rule.type] || 'input'
+    getComponentForRule(rule) {
+      return this.componentMap[rule.type] || "input";
     }
   }
 };
