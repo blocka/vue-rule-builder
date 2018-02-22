@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/vue";
 import Builder from "../src/components/Builder";
 
-require("./storybook.css");
+require("../src/assets/styles.css");
 
 const fields = [
   {

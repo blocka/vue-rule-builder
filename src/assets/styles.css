@@ -1,4 +1,5 @@
-* {
+.vrb-container,
+.vrb-container * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -9,24 +10,24 @@
 .vrb-container {
   margin-left: 20px;
 }
-div {
+.vrb-row {
   position: relative;
 }
-input {
+.vrb-input {
   height: 25px;
   padding: 5px 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin: 5px 5px;
 }
-select {
+.vrb-select {
   height: 25px;
   margin: 5px 5px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
-button {
+.vrb-btn {
   padding: 5px;
   height:25px;
   margin: 5px 5px;
@@ -37,7 +38,7 @@ button {
   color: white;
 }
 
-button:hover {
+.vrb-btn:hover {
   background: #2a406f;
   cursor: pointer;
 }
@@ -70,7 +71,7 @@ button:hover {
     border-radius: 4px;
     cursor: pointer;
 }
-.vrb-remove {
+.vrb-btn__remove {
     background: none;
     border: none;
     color: #ec5353;
@@ -78,15 +79,15 @@ button:hover {
     left: -20px;
     top: -1px;
 }
-.vrb-remove:hover {
+.vrb-btn__remove:hover {
   background: none;
 }
-.vrb-remove-group {
+.vrb-btn__remove-group {
   background: none;
   color: #222;
   border-color: #222;
 }
-.vrb-remove-group:hover {
+.vrb-btn__remove-group:hover {
   color: white;
   background: #222;
   border-color: #222;

@@ -1,34 +1,34 @@
 <template>
 <div class="vrb-container">
   <div>
-  <select :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
+  <select class="vrb-select" :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
     <option :value="true">All of these rules are true</option>
     <option :value="false">Any of these rules are true></option>
   </select>
   </div>
-  <div v-for="(rule, i) of filter.rules" :key="i">
+  <div v-for="(rule, i) of filter.rules" :key="i" class="vrb-row">
     <Builder
       v-if="typeof rule.all !== 'undefined'"
       :fields="fields"
       :filter="rule"
       class="vrb-nested"
     />
-    <div v-else>
-      <button class="vrb-remove" v-if="filter.rules.length > 1 || filter.id !== 'root'" data-test="removeRule" @click="removeRule(rule.id)">x</button>
-      <select :value="rule.field" @change="setField(rule.id, getField(value($event)))" data-test="fieldSelector">
+    <div v-else class="vrb-row">
+      <button class="vrb-btn vrb-btn__remove" v-if="filter.rules.length > 1 || filter.id !== 'root'" data-test="removeRule" @click="removeRule(rule.id)">x</button>
+      <select :value="rule.field" @change="setField(rule.id, getField(value($event)))" data-test="fieldSelector" class="vrb-select">
         <option :value="null">Field</option>
         <option v-for="(field, j) of fields" :key="j" :value="field.name">
           {{field.label}}
         </option>
       </select>
-      <select v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, value($event))">
+      <select v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, value($event))" class="vrb-select">
         <option :value="null">Operation</option>
         <option v-for="([label, value]) of operationsForField(rule.field)" :value="value" :key="value">
           {{label}}
         </option>
       </select>
       <component data-test="valueSetter" v-if="rule.operation" :is="getComponentForRule(rule)" :value="rule.value" :rule="rule" @change="setValue(rule, $event)"></component>
-      <div v-if="rule.field && isFilterable(rule.field)" data-test="fieldFilter">
+      <div v-if="rule.field && isFilterable(rule.field)" data-test="fieldFilter" class="vrb-row">
         <span v-if="rule.filter.rules.length === 0" @click="addRule(rule.filter.id)" class="vrb-filter-further">
           + Filter Further
         </span>
@@ -36,9 +36,9 @@
       </div>
     </div>
   </div>
-  <button data-test="addRule" @click="addRule(filter.id)">Add Rule</button>
-  <button data-test="addGroup" @click="addGroup(filter.id)">Add Group</button>
-  <button class="vrb-remove-group">Remove Group</button>
+  <button class="vrb-btn" data-test="addRule" @click="addRule(filter.id)">Add Rule</button>
+  <button class="vrb-btn" data-test="addGroup" @click="addGroup(filter.id)">Add Group</button>
+  <button class="vrb-btn vrb-btn__remove-group">Remove Group</button>
 </div>
 </template>
 <script>
