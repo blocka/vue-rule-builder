@@ -173,7 +173,7 @@ storiesOf("Rule Builder", module)
     template: `
       <rule-builder :filter.sync="filter" :fields="fields">
       <div style="margin-left: 50px; border: 1px dashed black"
-        slot-scope="{filter, fields, changeGroupType, getField, setOperation, setField, setValue, addRule, addGroup, componentForRule}">
+        slot-scope="{filter, fields, changeGroupType, getField, setOperation, setField, setValue, addRule, removeRule, addGroup, componentForRule, subfilter}">
         <div>
         <select :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
           <option :value="true">All of these rules are true</option>
@@ -185,6 +185,7 @@ storiesOf("Rule Builder", module)
             v-if="typeof rule.all !== 'undefined'"
             :fields="fields"
             :filter="rule"
+            :parent="filter"
             class="nested"
           />
           <div v-else>
@@ -213,12 +214,19 @@ storiesOf("Rule Builder", module)
                 + Filter Further
               </span>
               {{getField(rule.field).fields}}
-              <Builder class="nested" v-else :fields="getField(rule.field).fields" :filter="rule.filter" />
+              <Builder
+                class="nested"
+                v-else
+                :fields="getField(rule.field).fields"
+                :filter="rule.filter"
+                :parent="rule"
+              />
             </div>
           </div>
         </div>
         <button data-test="addRule" @click="addRule(filter.id)">Add Rule</button>
         <button data-test="addGroup" @click="addGroup(filter.id)">Add Group</button>
+        <button v-if="filter.id !== 'root' && !subfilter" @click="removeRule(filter.id)" data-test="removeGroup">Remove Group</button>
       </div>
     </rule-builder>
     `

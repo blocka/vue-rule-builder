@@ -2,7 +2,7 @@ import DefaultBuilder from "./DefaultBuilder";
 
 export default {
   name: "Builder",
-  props: ["filter", "fields"],
+  props: ["filter", "fields", "parent"],
   inject: [
     "addRule",
     "addGroup",
@@ -10,8 +10,14 @@ export default {
     "setField",
     "setOperation",
     "setValue",
-    "componentMap"
+    "componentMap",
+    "removeRule"
   ],
+  computed: {
+    subfilter() {
+      return this.parent && this.parent.filter;
+    }
+  },
   methods: {
     getField(field) {
       return this.fields.find(x => x.name === field);
@@ -25,7 +31,8 @@ export default {
       return h(DefaultBuilder, {
         props: {
           fields: this.fields,
-          filter: this.filter
+          filter: this.filter,
+          subfilter: this.subfilter
         }
       });
     }
@@ -40,7 +47,9 @@ export default {
       changeGroupType: this.changeGroupType,
       setField: this.setField,
       setOperation: this.setOperation,
-      setValue: this.setValue
+      setValue: this.setValue,
+      subfilter: this.subfilter,
+      removeRule: this.removeRule
     });
 
     const injectSlot = vnode => {

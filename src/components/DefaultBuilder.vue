@@ -11,10 +11,11 @@
       v-if="typeof rule.all !== 'undefined'"
       :fields="fields"
       :filter="rule"
+      :parent="filter"
       class="vrb-nested"
     />
     <div v-else class="vrb-row">
-      <button class="vrb-btn vrb-btn__remove" v-if="filter.rules.length > 1 || filter.id !== 'root'" data-test="removeRule" @click="removeRule(rule.id)">x</button>
+      <button class="vrb-btn vrb-btn__remove" v-if="filter.rules.length > 1 || filter.id !== 'root'" data-test="removeRule" @click="removeRule(filter.id, rule.id)">x</button>
       <select :value="rule.field" @change="setField(rule.id, getField(value($event)))" data-test="fieldSelector" class="vrb-select">
         <option :value="null">Field</option>
         <option v-for="(field, j) of fields" :key="j" :value="field.name">
@@ -32,19 +33,24 @@
         <span v-if="rule.filter.rules.length === 0" @click="addRule(rule.filter.id)" class="vrb-filter-further">
           + Filter Further
         </span>
-        <Builder class="vrb-nested" v-else :fields="getField(rule.field).fields" :filter="rule.filter" />
+        <Builder class="vrb-nested"
+          v-else
+          :fields="getField(rule.field).fields"
+          :filter="rule.filter"
+          :parent="rule"
+        />
       </div>
     </div>
   </div>
   <button class="vrb-btn" data-test="addRule" @click="addRule(filter.id)">Add Rule</button>
   <button class="vrb-btn" data-test="addGroup" @click="addGroup(filter.id)">Add Group</button>
-  <button class="vrb-btn vrb-btn__remove-group">Remove Group</button>
+  <button class="vrb-btn vrb-btn__remove-group" v-if="filter.id !== 'root' && !subfilter" @click="removeRule(filter.id)" data-test="removeGroup">Remove Group</button>
 </div>
 </template>
 <script>
 const DefaultBuilder = {
   name: "DefaultBuilder",
-  props: ["filter", "fields"],
+  props: ["filter", "fields", "subfilter"],
   inject: [
     "addRule",
     "removeRule",

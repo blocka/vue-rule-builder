@@ -398,7 +398,6 @@ describe("RuleBuilder.vue", () => {
     expect(expected).toEqual(0);
   });
 
-  /* Don't know why this fails
   test("remove a filter rule", () => {
     const spy = jest.fn();
 
@@ -435,10 +434,50 @@ describe("RuleBuilder.vue", () => {
     });
 
     const button = wrapper.find('[data-test="removeRule"]');
-
     button.trigger("click");
 
-    const expected = spy.mock.calls[0][0].rules[0].rules.length;
+    const expected = spy.mock.calls[0][0].rules[0].filter.rules.length;
     expect(expected).toEqual(0);
-  });*/
+  });
+
+  test("remove a filter group", () => {
+    const spy = jest.fn();
+
+    const wrapper = mount({
+      data() {
+        return {
+          fields,
+          filter: {
+            all: true,
+            rules: [
+              {
+                all: true,
+                rules: [
+                  {
+                    field: null,
+                    operation: null,
+                    value: null
+                  }
+                ]
+              }
+            ]
+          }
+        };
+      },
+      methods: {
+        spy
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" @update:filter="spy" :fields="fields">
+      </rule-builder>
+    `
+    });
+
+    const button = wrapper.find('[data-test="removeGroup"]');
+    button.trigger("click");
+
+    const expected = spy.mock.calls[0][0].rules.length;
+    expect(expected).toEqual(0);
+  });
 });
