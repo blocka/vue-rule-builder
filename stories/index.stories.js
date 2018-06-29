@@ -28,43 +28,15 @@ const filter = () => ({
   all: true,
   rules: [
     {
-      field: "ID",
-      operation: "equals",
-      value: 4
-    },
-    {
       field: "totalPayments",
-      operation: "gt",
-      value: 100,
       filter: {
         all: true,
         rules: [
           {
-            field: "department",
-            operation: "equals",
-            value: 4
+            field: "department"
           }
         ]
       }
-    },
-    {
-      field: "totalPayments",
-      operation: "gt",
-      value: 100,
-      filter: {
-        all: true,
-        rules: [{}]
-      }
-    },
-    {
-      all: true,
-      rules: [
-        {
-          field: "ID",
-          operation: "equals",
-          value: 4
-        }
-      ]
     }
   ]
 });
