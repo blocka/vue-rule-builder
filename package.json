@@ -1,7 +1,7 @@
 {
   "name": "vue-rule-builder",
   "description": "A Vue.js 2.0 library project",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/vue-rule-builder.common.js",
   "module": "dist/vue-rule-builder.esm.js",
