@@ -75,7 +75,7 @@ storiesOf("Rule Builder", module)
   .add(
     "no filters",
     withMarkdownNotes(`
-  ~~~js
+~~~js
 
 const fields = [
   {
@@ -127,7 +127,7 @@ const component = {
   .add(
     "one filter",
     withMarkdownNotes(`
-    ~~~js
+~~~js
 const fields = [
   {
     name: "ID",
@@ -168,7 +168,7 @@ const component = {
   </rule-builder>
   \`
 }
-    ~~~
+~~~
     `)(() => ({
       data() {
         return {
@@ -190,9 +190,111 @@ const component = {
     }))
   )
   .add(
+    "custom component",
+    withMarkdownNotes(`
+~~~js
+const fields = [
+  {
+    name: "ID",
+    label: "ID",
+    operations: [["Is", "equals"]]
+  },
+  {
+    name: "totalPayments",
+    label: "Total Payments",
+    operations: [["Greater Than", "gte"]],
+    filterable: true,
+    fields: [
+      {
+        name: "department",
+        label: "Department",
+        operations: [["Is", "equals"]]
+      }
+    ]
+  },
+  {
+    type: 'text',
+    name: 'name',
+    label: 'Name',
+    operations: [['Is', 'eq'], ['Contains', 'like']]
+  }
+];
+
+const component = {
+  data() {
+    return {
+      filter: {
+        all: true,
+        rules: [
+          {
+            field: 'name',
+            operation: 'eq',
+            value: null
+          }
+        ]
+      },
+      fields
+    };
+  },
+  template: \`
+  <rule-builder :filter.sync="filter" :fields="fields">
+  </rule-builder>
+  \`
+}
+~~~
+    `)(() => ({
+      data() {
+        return {
+          filter: {
+            all: true,
+            rules: [
+              {
+                field: 'name',
+                operation: 'eq',
+                value: null
+              }
+            ]
+          },
+          fields: [
+            ...fields,
+            {
+              type: 'text',
+              name: 'name',
+              label: 'Name',
+              operations: [['Is', 'eq'], ['Contains', 'like']]
+            }
+          ],
+          componentMap: {
+            text: {
+              props: ['value'],
+              template: `
+                <div>
+                Custom Component
+                <input :value="value" @change="emit" />
+                </div>
+              `,
+              methods: {
+                emit (e) {
+                  this.$emit('change', e.target.value);
+                }
+              }
+            }
+          }
+        };
+      },
+      template: `
+      <div>
+  <rule-builder :filter.sync="filter" :fields="fields" :componentMap="componentMap">
+  </rule-builder>
+  <pre>{{filter}}</pre>
+  </div>
+  `
+    }))
+  )
+  .add(
     "two filters",
     withMarkdownNotes(`
-    ~~~js
+~~~js
 const fields = [
   {
     name: "ID",
@@ -236,7 +338,7 @@ const component = {
 </rule-builder>
 \`
 }
-    ~~~
+~~~
     `)(() => ({
       data() {
         return {

@@ -22,13 +22,19 @@
           {{field.label}}
         </option>
       </select>
-      <select v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, value($event))" class="vrb-select">
+      <select :value="rule.operation" v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, value($event))" class="vrb-select">
         <option :value="null">Operation</option>
         <option v-for="([label, value]) of operationsForField(rule.field)" :value="value" :key="value">
           {{label}}
         </option>
       </select>
-      <component data-test="valueSetter" v-if="rule.operation" :is="getComponentForRule(rule)" :value="rule.value" :rule="rule" @change="setValue(rule, $event)"></component>
+      <component
+        data-test="valueSetter"
+        v-if="rule.operation"
+        :is="componentForRule(rule)"
+        :value="rule.value"
+        :rule="rule"
+        @change="setValue(rule.id, $event)"></component>
       <div v-if="rule.field && isFilterable(rule.field)" data-test="fieldFilter" class="vrb-row">
         <span v-if="rule.filter.rules.length === 0" @click="addRule(rule.filter.id)" class="vrb-filter-further">
           + Filter Further
@@ -50,7 +56,13 @@
 <script>
 const DefaultBuilder = {
   name: "DefaultBuilder",
-  props: ["filter", "fields", "subfilter"],
+  props: [
+    "filter",
+    "fields",
+    "subfilter",
+    "componentForRule",
+    "getField"
+  ],
   inject: [
     "addRule",
     "removeRule",
@@ -58,8 +70,7 @@ const DefaultBuilder = {
     "changeGroupType",
     "setField",
     "setOperation",
-    "setValue",
-    "componentMap"
+    "setValue"
   ],
   created() {
     const Builder = require("./Builder");
@@ -72,14 +83,8 @@ const DefaultBuilder = {
     operationsForField(field) {
       return this.getField(field).operations;
     },
-    getField(field) {
-      return this.fields.find(x => x.name === field);
-    },
     isFilterable(field) {
       return this.getField(field).filterable;
-    },
-    getComponentForRule(rule) {
-      return this.componentMap[rule.type] || "input";
     }
   }
 };

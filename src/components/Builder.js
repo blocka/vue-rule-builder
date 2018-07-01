@@ -23,7 +23,7 @@ export default {
       return this.fields.find(x => x.name === field);
     },
     componentForRule(rule) {
-      return this.componentMap[rule.type] || "input";
+      return this.componentMap[this.getField(rule.field).type] || "input";
     }
   },
   render(h) {
@@ -32,7 +32,9 @@ export default {
         props: {
           fields: this.fields,
           filter: this.filter,
-          subfilter: this.subfilter
+          subfilter: this.subfilter,
+          componentForRule: this.componentForRule,
+          getField: this.getField
         }
       });
     }
