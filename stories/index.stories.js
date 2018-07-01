@@ -233,11 +233,27 @@ const component = {
           }
         ]
       },
-      fields
+      fields,
+      componentMap: {
+        text: {
+          props: ['value'],
+          template: \`
+            <div>
+            Custom Component
+            <input :value="value" @change="emit" />
+            </div>
+          \`,
+          methods: {
+            emit (e) {
+              this.$emit('change', e.target.value);
+            }
+          }
+        }
+      }
     };
   },
   template: \`
-  <rule-builder :filter.sync="filter" :fields="fields">
+  <rule-builder :filter.sync="filter" :fields="fields" :componentMap="componentMap">
   </rule-builder>
   \`
 }
