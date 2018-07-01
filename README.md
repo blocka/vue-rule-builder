@@ -1,6 +1,22 @@
 # What is this?
 This component can be used whenever you need a UI for created complex filters. The UI is used to build up a data structure which can be used to generate a query of some sort.
 
+# Installation
+
+`npm install vue-rule-builder` (or use yarn)
+
+To use globally:
+
+```js
+import RuleBuilder from 'vue-rule-builder'
+
+Vue.use(RuleBuilder)
+```
+
+or `import { RuleBuilder } from 'vue-rule-builder'` for "local" installation.
+
+You can import the built in stylesheet as well: `import 'vue-rule-builder/dist/styles.css`
+
 A rule consists of three fields, a name, operation and value
 `{ name: 'firstName', operation: 'startsWith', value: 'B' }`
 
@@ -10,7 +26,7 @@ Rules can be put in a group:
 `{ all: true, rules: [] }`
 
 Rules can be filtered further:
-```
+```js
 {
 name: 'totalPayments',
 filter: {
