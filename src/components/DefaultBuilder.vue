@@ -62,7 +62,8 @@ const DefaultBuilder = {
     "componentMap"
   ],
   created() {
-    this.$options.components.Builder = require("./Builder").default;
+    const Builder = require("./Builder");
+    this.$options.components.Builder = Builder.default || Builder;
   },
   methods: {
     value(e) {

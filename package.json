@@ -6,16 +6,15 @@
     "test": "jest --verbose --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "bili --no-babel.babelrc --plugin vue --format cjs,umd,umd-min,es",
+    "build": "bili src/index.js src/components/Builder.js --plugin vue --js babel --no-babel.babelrc --format cjs,umd,umd-min,es  && cp src/assets/styles.css dist/styles.css",
     "prepublishOnly": "npm run build"
   },
-  "main": "dist/vue-rule-builder.cjs.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/vue-rule-builder.es.js",
   "unpkg": "dist/vue-rule-builder.min.js",
   "jsdelivr": "dist/vue-rule-builder.min.js",
   "files": [
-    "src",
-    "dist/*.js"
+    "dist/*.*"
   ],
   "repository": {
     "type": "git",
