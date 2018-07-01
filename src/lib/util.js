@@ -1,4 +1,4 @@
-import * as uuid from "uuid";
+import uuid from "uuid";
 import * as N from "normalizr";
 import omitDeep from "omit-deep-lodash";
 import without from "lodash/without";

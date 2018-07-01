@@ -1,4 +1,4 @@
-import DefaultBuilder from "./DefaultBuilder";
+import DefaultBuilder from "./DefaultBuilder.vue";
 
 export default {
   name: "Builder",
