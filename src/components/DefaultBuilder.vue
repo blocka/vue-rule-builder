@@ -79,8 +79,6 @@ const DefaultBuilder = {
   },
   methods: {
     unary (field, operation) {
-      if (!operation) return true;
-
       return this.operationsForField(field).find(x => x.value === operation).unary
     },
     value(e) {
