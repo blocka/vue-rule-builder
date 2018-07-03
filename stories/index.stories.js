@@ -13,7 +13,11 @@ const fields = [
   {
     name: "totalPayments",
     label: "Total Payments",
-    operations: [["Greater Than", "gte"]],
+    operations: [["Greater Than", "gte"], {
+      value: 'is_not_null',
+      label: 'Has Any',
+      unary: true
+    }],
     filterable: true,
     fields: [
       {
@@ -35,7 +39,7 @@ const filter = () => ({
     },
     {
       field: "totalPayments",
-      operation: "gt",
+      operation: "gte",
       value: 100,
       filter: {
         all: true,
@@ -50,7 +54,7 @@ const filter = () => ({
     },
     {
       field: "totalPayments",
-      operation: "gt",
+      operation: "gte",
       value: 100,
       filter: {
         all: true,
@@ -489,7 +493,7 @@ const filter = {
     },
     {
       field: "totalPayments",
-      operation: "gt",
+      operation: "gte",
       value: 100,
       filter: {
         all: true,
@@ -504,7 +508,7 @@ const filter = {
     },
     {
       field: "totalPayments",
-      operation: "gt",
+      operation: "gte",
       value: 100,
       filter: {
         all: true,
@@ -585,7 +589,7 @@ const filter = {
     },
     {
       field: "totalPayments",
-      operation: "gt",
+      operation: "gte",
       value: 100,
       filter: {
         all: true,
@@ -600,7 +604,7 @@ const filter = {
     },
     {
       field: "totalPayments",
-      operation: "gt",
+      operation: "gte",
       value: 100,
       filter: {
         all: true,
@@ -633,7 +637,7 @@ const component = {
   template: \`
   <rule-builder :filter.sync="filter" :fields="fields">
   <div style="margin-left: 50px; border: 1px dashed black"
-    slot-scope="{filter, fields, changeGroupType, getField, setOperation, setField, setValue, addRule, removeRule, addGroup, componentForRule, subfilter}">
+    slot-scope="{filter, fields, changeGroupType, getField, setOperation, operationsForField, setField, setValue, addRule, removeRule, addGroup, componentForRule, subfilter}">
     <div>
     <select :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
       <option :value="true">All of these rules are true</option>
@@ -657,7 +661,7 @@ const component = {
         </select>
         <select v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, $event.target.value)">
           <option :value="null">Operation</option>
-          <option v-for="([label, value]) of getField(rule.field).operations" :value="value" :key="value">
+          <option v-for="({label, value}) of operationsForField(rule.field)" :value="value" :key="value">
             {{label}}
           </option>
         </select>
@@ -705,7 +709,7 @@ const component = {
       template: `
       <rule-builder :filter.sync="filter" :fields="fields">
       <div style="margin-left: 50px; border: 1px dashed black"
-        slot-scope="{filter, fields, changeGroupType, getField, setOperation, setField, setValue, addRule, removeRule, addGroup, componentForRule, subfilter}">
+        slot-scope="{filter, fields, changeGroupType, getField, operationsForField, setOperation, setField, setValue, addRule, removeRule, addGroup, componentForRule, subfilter}">
         <div>
         <select :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
           <option :value="true">All of these rules are true</option>
@@ -729,7 +733,7 @@ const component = {
             </select>
             <select v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, $event.target.value)">
               <option :value="null">Operation</option>
-              <option v-for="([label, value]) of getField(rule.field).operations" :value="value" :key="value">
+              <option v-for="({label, value}) of operationsForField(rule.field)" :value="value" :key="value">
                 {{label}}
               </option>
             </select>

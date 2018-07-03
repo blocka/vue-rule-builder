@@ -24,6 +24,17 @@ export default {
     },
     componentForRule(rule) {
       return this.componentMap[this.getField(rule.field).type] || "input";
+    },
+    operationsForField(field) {
+      const ops = this.getField(field).operations;
+
+      return ops.map(op => op.length
+        ? {
+          value: op[1],
+          label: op[0],
+          unary: false
+        }
+        : op)
     }
   },
   render(h) {
@@ -34,6 +45,7 @@ export default {
           filter: this.filter,
           subfilter: this.subfilter,
           componentForRule: this.componentForRule,
+          operationsForField: this.operationsForField,
           getField: this.getField
         }
       });
@@ -44,6 +56,7 @@ export default {
       getField: this.getField,
       filter: this.filter,
       componentForRule: this.componentForRule,
+      operationsForField: this.operationsForField,
       addRule: this.addRule,
       addGroup: this.addGroup,
       changeGroupType: this.changeGroupType,

@@ -24,13 +24,13 @@
       </select>
       <select :value="rule.operation" v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, value($event))" class="vrb-select">
         <option :value="null">Operation</option>
-        <option v-for="([label, value]) of operationsForField(rule.field)" :value="value" :key="value">
+        <option v-for="({label, value}) of operationsForField(rule.field)" :value="value" :key="value">
           {{label}}
         </option>
       </select>
       <component
         data-test="valueSetter"
-        v-if="rule.operation"
+        v-if="rule.operation && !unary(rule.field, rule.operation)"
         :is="componentForRule(rule)"
         :value="rule.value"
         :rule="rule"
@@ -61,6 +61,7 @@ const DefaultBuilder = {
     "fields",
     "subfilter",
     "componentForRule",
+    "operationsForField",
     "getField"
   ],
   inject: [
@@ -77,11 +78,13 @@ const DefaultBuilder = {
     this.$options.components.Builder = Builder.default || Builder;
   },
   methods: {
+    unary (field, operation) {
+      if (!operation) return true;
+
+      return this.operationsForField(field).find(x => x.value === operation).unary
+    },
     value(e) {
       return e.target.value;
-    },
-    operationsForField(field) {
-      return this.getField(field).operations;
     },
     isFilterable(field) {
       return this.getField(field).filterable;
