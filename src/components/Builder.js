@@ -28,6 +28,8 @@ export default {
     operationsForField(field) {
       const ops = this.getField(field).operations;
 
+      if (!ops) return false;
+
       return ops.map(op => op.length
         ? {
           value: op[1],

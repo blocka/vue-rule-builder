@@ -22,7 +22,7 @@
           {{field.label}}
         </option>
       </select>
-      <select :value="rule.operation" v-if="rule.field" data-test="operationSelector" @change="setOperation(rule.id, value($event))" class="vrb-select">
+      <select :value="rule.operation" v-if="rule.field && operationsForField(rule.field)" data-test="operationSelector" @change="setOperation(rule.id, value($event))" class="vrb-select">
         <option :value="null">Operation</option>
         <option v-for="({label, value}) of operationsForField(rule.field)" :value="value" :key="value">
           {{label}}

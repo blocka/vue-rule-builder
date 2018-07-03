@@ -220,6 +220,119 @@ describe("RuleBuilder.vue", () => {
     wrapper.find('[data-test="operationSelector"]');
   });
 
+  test("setting a field will show operations", () => {
+    const wrapper = mount({
+      data() {
+        return {
+          fields: [
+            {
+              name: "ID",
+              label: "ID",
+              operations: [["Is", "equals"]],
+              type: "number"
+            },
+            {
+              name: "this_fiscal_year",
+              label: "This Fiscal Year"
+            }
+          ],
+          filter: {
+            all: true,
+            rules: [
+              {
+                field: "ID",
+                operation: null,
+                value: null
+              }
+            ]
+          }
+        };
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" :fields="fields">
+      </rule-builder>
+    `
+    });
+
+    wrapper.find('[data-test="operationSelector"]')
+  })
+test("setting a field will show operations", () => {
+    const wrapper = mount({
+      data() {
+        return {
+          fields: [
+            {
+              name: "ID",
+              label: "ID",
+              operations: [["Is", "equals"]],
+              type: "number"
+            },
+            {
+              name: "this_fiscal_year",
+              label: "This Fiscal Year"
+            }
+          ],
+          filter: {
+            all: true,
+            rules: [
+              {
+                field: "ID",
+                operation: null,
+                value: null
+              }
+            ]
+          }
+        };
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" :fields="fields">
+      </rule-builder>
+    `
+    });
+
+    expect(wrapper.findAll('[data-test="operationSelector"]').length).toBe(1)
+  })
+
+  test("setting a field will not operations if none defined", () => {
+    const wrapper = mount({
+      data() {
+        return {
+          fields: [
+            {
+              name: "ID",
+              label: "ID",
+              operations: [["Is", "equals"]],
+              type: "number"
+            },
+            {
+              name: "this_fiscal_year",
+              label: "This Fiscal Year"
+            }
+          ],
+          filter: {
+            all: true,
+            rules: [
+              {
+                field: "this_fiscal_year",
+                operation: null,
+                value: null
+              }
+            ]
+          }
+        };
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" :fields="fields">
+      </rule-builder>
+    `
+    });
+
+    expect(wrapper.findAll('[data-test="operationSelector"]').length).toBe(0)
+  })
+
   test("setting a filterable field shows sub filter", () => {
     const spy = jest.fn();
 
