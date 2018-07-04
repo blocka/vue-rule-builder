@@ -3,7 +3,7 @@
   <div>
   <select class="vrb-select" :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
     <option :value="true">All of these rules are true</option>
-    <option :value="false">Any of these rules are true></option>
+    <option :value="false">Any of these rules are true</option>
   </select>
   </div>
   <div v-for="(rule, i) of filter.rules" :key="i" class="vrb-row">
@@ -33,6 +33,7 @@
         v-if="rule.operation && !unary(rule.field, rule.operation)"
         :is="componentForRule(rule)"
         :value="rule.value"
+        class="vrb-input"
         :rule="rule"
         @change="setValue(rule.id, $event)"></component>
       <div v-if="rule.field && isFilterable(rule.field)" data-test="fieldFilter" class="vrb-row">

@@ -244,7 +244,7 @@ const component = {
           template: \`
             <div>
             Custom Component
-            <input :value="value" @change="emit" />
+            <input :value="value" @change="emit" class="vrb-input"/>
             </div>
           \`,
           methods: {
@@ -290,7 +290,7 @@ const component = {
               template: `
                 <div>
                 Custom Component
-                <input :value="value" @change="emit" />
+                <input :value="value" @change="emit" class="vrb-input"/>
                 </div>
               `,
               methods: {
@@ -641,7 +641,7 @@ const component = {
     <div>
     <select :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
       <option :value="true">All of these rules are true</option>
-      <option :value="false">Any of these rules are true></option>
+      <option :value="false">Any of these rules are true</option>
     </select>
     </div>
     <div v-for="(rule, i) of filter.rules" :key="i">
@@ -670,6 +670,7 @@ const component = {
           v-if="rule.operation"
           :is="componentForRule(rule)"
           :value="rule.value"
+          class="vrb-input"
           :rule="rule"
           @change="setValue(rule.id, $event.target ? $event.target.value : $event)"
         ></component>
@@ -713,7 +714,7 @@ const component = {
         <div>
         <select :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, $event.target._value)">
           <option :value="true">All of these rules are true</option>
-          <option :value="false">Any of these rules are true></option>
+          <option :value="false">Any of these rules are true</option>
         </select>
         </div>
         <div v-for="(rule, i) of filter.rules" :key="i">
@@ -742,6 +743,7 @@ const component = {
               v-if="rule.operation"
               :is="componentForRule(rule)"
               :value="rule.value"
+              class="vrb-input"
               :rule="rule"
               @change="setValue(rule.id, $event.target ? $event.target.value : $event)"
             ></component>

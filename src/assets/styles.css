@@ -13,20 +13,23 @@
 .vrb-row {
   position: relative;
 }
-.vrb-input {
+.vrb-container .vrb-input {
   height: 25px;
   padding: 5px 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin: 5px 5px;
+  display: inline-block;
+  width: auto;
 }
-.vrb-select {
+.vrb-container .vrb-select {
   height: 25px;
   margin: 5px 5px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
   width: auto;
+  display: inline-block;
 }
 .vrb-btn {
   padding: 5px;
