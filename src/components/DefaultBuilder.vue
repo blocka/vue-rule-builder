@@ -28,14 +28,24 @@
           {{label}}
         </option>
       </select>
+      <template v-if="rule.operation && !unary(rule.field, rule.operation)">
       <component
         data-test="valueSetter"
-        v-if="rule.operation && !unary(rule.field, rule.operation)"
+        v-if="componentForRule(rule)"
         :is="componentForRule(rule)"
+        class="vrb-custom"
         :value="rule.value"
-        class="vrb-input"
         :rule="rule"
         @change="setValue(rule.id, $event)"></component>
+        <input 
+          data-test="valueSetter" 
+          class="vrb-input" 
+          v-else
+          :value="rule.value"
+          :rule="rule"
+          @change="setValue(rule.id, $event)"
+        />
+        </template>
       <div v-if="rule.field && isFilterable(rule.field)" data-test="fieldFilter" class="vrb-row">
         <span v-if="rule.filter.rules.length === 0" @click="addRule(rule.filter.id)" class="vrb-filter-further">
           + Filter Further

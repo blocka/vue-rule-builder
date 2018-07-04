@@ -23,7 +23,7 @@ export default {
       return this.fields.find(x => x.name === field);
     },
     componentForRule(rule) {
-      return this.componentMap[this.getField(rule.field).type] || "input";
+      return this.componentMap[this.getField(rule.field).type];
     },
     operationsForField(field) {
       const ops = this.getField(field).operations;

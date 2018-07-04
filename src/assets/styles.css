@@ -46,7 +46,9 @@
   background: #2a406f;
   cursor: pointer;
 }
-
+.vrb-custom {
+  display: inline-block;
+}
 .vrb-nested {
   margin: 15px 0 15px 25px;
   padding-left: 10px;

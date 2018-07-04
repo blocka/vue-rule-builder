@@ -674,6 +674,14 @@ const component = {
           :rule="rule"
           @change="setValue(rule.id, $event.target ? $event.target.value : $event)"
         ></component>
+        <input 
+          data-test="valueSetter" 
+          class="vrb-input" 
+          v-if="!componentForRule(rule)"
+          :value="rule.value"
+          :rule="rule"
+          @change="setValue(rule.id, $event)"
+        />
         <div v-if="rule.field && getField(rule.field).filterable" data-test="fieldFilter">
           <span v-if="rule.filter.rules.length === 0" @click="addRule(rule.filter.id)">
             + Filter Further
