@@ -217,7 +217,7 @@ describe("RuleBuilder.vue", () => {
 
     expect({ field, operation, value }).toEqual({
       field: "ID",
-      operation: null,
+      operation: 'equals',
       value: null
     });
 
@@ -259,6 +259,60 @@ describe("RuleBuilder.vue", () => {
     `
     });
 
+    wrapper.find('[data-test="operationSelector"]')
+  })
+
+  test("setting a field will set operation if only one is defined", () => {
+    const spy = jest.fn();
+
+    const wrapper = mount({
+      data() {
+        return {
+          fields: [
+            {
+              name: "ID",
+              label: "ID",
+              operations: [["Is", "equals"]],
+              type: "number"
+            },
+          ],
+          filter: {
+            all: true,
+            rules: [
+              {
+                field: null,
+                operation: null,
+                value: null
+              }
+            ]
+          }
+        };
+      },
+      methods: {
+        spy
+      },
+      components: { RuleBuilder },
+      template: `
+      <rule-builder :filter="filter" :fields="fields" @update:filter="spy">
+      </rule-builder>
+    `
+    });
+
+    const select = wrapper.find('[data-test="fieldSelector"]');
+
+    select.element.value = "ID";
+
+    select.trigger("change");
+
+    const { field, operation, value } = spy.mock.calls[0][0].rules[0];
+
+    expect({ field, operation, value }).toEqual({
+      field: "ID",
+      operation: 'equals',
+      value: null
+    });
+
+    
     wrapper.find('[data-test="operationSelector"]')
   })
 test("setting a field will show operations", () => {

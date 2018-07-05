@@ -69,10 +69,21 @@ export default {
       this.normalizedFilter = addFilter(this.normalizedFilter, parent);
       this.$emit("update:filter", stripIDs(this.denormalizedFilter));
     },
-    setField(id, { name, filterable }) {
+    setField(id, { name, filterable, operations }) {
+      const normalizedOperations = (operations || []).map(op =>
+        op.length ? {
+          value: op[1],
+          label: op[0],
+          unary: false
+        }
+        : op
+      )
+
       const rule = {
         field: name,
-        operation: null,
+        operation: normalizedOperations.length === 1
+          ? normalizedOperations[0].value
+          : null,
         value: null
       };
 
