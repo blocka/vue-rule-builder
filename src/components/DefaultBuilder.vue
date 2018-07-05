@@ -1,7 +1,7 @@
 <template>
 <div class="vrb-container">
   <div>
-  <select class="vrb-select" :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, JSON.parse($event.target.value))">
+  <select v-if="filter.rules.length > 1" class="vrb-select" :value="filter.all" data-test="allSelector" @change="changeGroupType(filter.id, JSON.parse($event.target.value))">
     <option :value="true">All of these rules are true</option>
     <option :value="false">Any of these rules are true</option>
   </select>

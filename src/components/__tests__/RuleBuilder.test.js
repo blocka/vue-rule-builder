@@ -70,7 +70,11 @@ describe("RuleBuilder.vue", () => {
           fields,
           filter: {
             all: true,
-            rules: []
+            rules: [{
+              field: null
+            },{
+              field: null
+            }]
           }
         };
       },
