@@ -43,7 +43,7 @@
           v-else
           :value="rule.value"
           :rule="rule"
-          @change="setValue(rule.id, $event)"
+          @change="setValue(rule.id, $event.target.value)"
         />
         </template>
       <div v-if="rule.field && isFilterable(rule.field)" data-test="fieldFilter" class="vrb-row">
