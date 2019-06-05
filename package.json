@@ -1,6 +1,6 @@
 {
   "name": "vue-rule-builder",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A vue component for building complex filtering rules",
   "scripts": {
     "test": "jest --verbose --coverage",
@@ -10,9 +10,9 @@
     "prepublishOnly": "npm run build"
   },
   "main": "dist/index.cjs.js",
-  "module": "dist/vue-rule-builder.es.js",
-  "unpkg": "dist/vue-rule-builder.min.js",
-  "jsdelivr": "dist/vue-rule-builder.min.js",
+  "module": "dist/index.es.js",
+  "unpkg": "dist/index.min.js",
+  "jsdelivr": "dist/index.min.js",
   "files": [
     "dist/*.*"
   ],
