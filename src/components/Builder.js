@@ -1,8 +1,44 @@
-import DefaultBuilder from "./DefaultBuilder.vue";
+<template>
+  <div>
+    <template v-if="!$scopedSlots.default">
+      <DefaultBuilder
+        :fields="fields"
+        :filter="filter"
+        :subfilter="subfilter"
+        :componentForRule="componentForRule"
+        :operationsForField="operationsForField"
+        :getField="getField"
+      />
+    </template>
+    <template v-else>
+      <slot
+        :fields="fields"
+        :getField="getField"
+        :filter="filter"
+        :componentForRule="componentForRule"
+        :operationsForField="operationsForField"
+        :addRule="addRule"
+        :addGroup="addGroup"
+        :changeGroupType="changeGroupType"
+        :setField="setField"
+        :setOperation="setOperation"
+        :setValue="setValue"
+        :subfilter="subfilter"
+        :removeRule="removeRule"
+      />
+    </template>
+  </div>
+</template>
 
-export default {
-  name: "Builder",
-  props: ["filter", "fields", "parent"],
+<script setup>
+import { defineComponent, inject } from 'vue';
+
+export default defineComponent({
+  props: {
+    filter: Object,
+    fields: Array,
+    parent: Object, // Assuming parent prop is still used
+  },
   inject: [
     "addRule",
     "addGroup",
@@ -30,63 +66,14 @@ export default {
 
       if (!ops) return false;
 
-      return ops.map(op => op.length
+      return ops.map(op => (op.length
         ? {
-          value: op[1],
-          label: op[0],
-          unary: false
-        }
-        : op)
+            value: op[1],
+            label: op[0],
+            unary: false
+          }
+        : op));
     }
-  },
-  render(h) {
-    if (!this.$scopedSlots.default) {
-      return h(DefaultBuilder, {
-        props: {
-          fields: this.fields,
-          filter: this.filter,
-          subfilter: this.subfilter,
-          componentForRule: this.componentForRule,
-          operationsForField: this.operationsForField,
-          getField: this.getField
-        }
-      });
-    }
-
-    const vnode = this.$scopedSlots.default({
-      fields: this.fields,
-      getField: this.getField,
-      filter: this.filter,
-      componentForRule: this.componentForRule,
-      operationsForField: this.operationsForField,
-      addRule: this.addRule,
-      addGroup: this.addGroup,
-      changeGroupType: this.changeGroupType,
-      setField: this.setField,
-      setOperation: this.setOperation,
-      setValue: this.setValue,
-      subfilter: this.subfilter,
-      removeRule: this.removeRule
-    });
-
-    const injectSlot = vnode => {
-      if (
-        vnode.componentOptions &&
-        vnode.componentOptions.Ctor.options.name === "Builder"
-      ) {
-        vnode.data.scopedSlots = {
-          default: this.$scopedSlots.default
-        };
-      }
-      if (vnode.children) {
-        for (const child of vnode.children) {
-          injectSlot(child);
-        }
-      }
-    };
-
-    injectSlot(vnode);
-
-    return h("div", [vnode]);
   }
-};
+});
+</script>
