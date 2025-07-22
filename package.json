@@ -54,9 +54,9 @@
     "babel-preset-vue-app": "^2.0.0",
     "bili": "^3.1.2",
     "css-loader": "^0.28.11",
-    "jest": "^23.2.0",
+    "jest": "^30.0.5",
     "prettier": "^1.13.7",
-    "rollup-plugin-vue": "^2.5.4",
+    "rollup-plugin-vue": "^6.0.0",
     "vue-jest": "^2.6.0",
     "vue-loader": "^14.2.3"
   }
